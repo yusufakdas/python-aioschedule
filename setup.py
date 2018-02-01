@@ -16,7 +16,7 @@ from setuptools import setup
 
 SCHEDULE_VERSION = '0.5.0'
 SCHEDULE_DOWNLOAD_URL = (
-    'https://github.com/dbader/schedule/tarball/' + SCHEDULE_VERSION
+    'https://github.com/ibrb/python-aioschedule/tarball/' + SCHEDULE_VERSION
 )
 
 def read_file(filename):
@@ -27,26 +27,24 @@ def read_file(filename):
         return f.read()
 
 setup(
-    name='schedule',
-    packages=['schedule'],
+    name='aioschedule',
+    packages=['aioschedule'],
     version=SCHEDULE_VERSION,
     description='Job scheduling for humans.',
     long_description=read_file('README.rst'),
     license='MIT',
-    author='Daniel Bader',
-    author_email='mail@dbader.org',
-    url='https://github.com/dbader/schedule',
+    author='Daniel Bader, Cochise Ruhulessin',
+    author_email='development@ibrb.io',
+    url='https://github.com/ibrb/python-aioschedule',
     download_url=SCHEDULE_DOWNLOAD_URL,
     keywords=[
-        'schedule', 'periodic', 'jobs', 'scheduling', 'clockwork',
+        'aioschedule', 'periodic', 'jobs', 'scheduling', 'clockwork',
         'cron', 'scheduler', 'job scheduling'
     ],
     classifiers=[
         'Intended Audience :: Developers',
         'License :: OSI Approved :: MIT License',
         'Programming Language :: Python',
-        'Programming Language :: Python :: 3',
-        'Programming Language :: Python :: 2.7',
         'Programming Language :: Python :: 3.5',
         'Programming Language :: Python :: 3.6',
         'Natural Language :: English',

@@ -3,7 +3,7 @@
 Developer Interface
 ===================
 
-.. module:: schedule
+.. module:: aioschedule
 
 This part of the documentation covers all the interfaces of schedule. For
 parts where schedule depends on external libraries, we document the most
@@ -26,16 +26,16 @@ Main Interface
 Exceptions
 ----------
 
-.. autoexception:: schedule.CancelJob
+.. autoexception:: aioschedule.CancelJob
 
 
 Classes
 -------
 
-.. autoclass:: schedule.Scheduler
+.. autoclass:: aioschedule.Scheduler
    :members:
    :undoc-members:
 
-.. autoclass:: schedule.Job
+.. autoclass:: aioschedule.Job
    :members:
    :undoc-members:

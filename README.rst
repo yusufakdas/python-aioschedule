@@ -1,17 +1,21 @@
-schedule
-========
+aioschedule
+===========
 
 
-.. image:: https://api.travis-ci.org/dbader/schedule.svg?branch=master
-        :target: https://travis-ci.org/dbader/schedule
+.. image:: https://api.travis-ci.org/ibrb/python-aioschedule.svg?branch=master
+        :target: https://travis-ci.org/ibrb/python-aioschedule
 
-.. image:: https://coveralls.io/repos/dbader/schedule/badge.svg?branch=master
-        :target: https://coveralls.io/r/dbader/schedule
+.. image:: https://coveralls.io/repos/ibrb/python-aioschedule/badge.svg?branch=master
+        :target: https://coveralls.io/r/ibrb/python-aioschedule
 
-.. image:: https://img.shields.io/pypi/v/schedule.svg
-        :target: https://pypi.python.org/pypi/schedule
+.. image:: https://img.shields.io/pypi/v/aioschedule.svg
+        :target: https://pypi.python.org/pypi/aioschedule
 
-Python job scheduling for humans.
+.. image:: https://media.ibrb.org/ibr/images/logos/landscape1200.png
+        :target: https://media.ibrb.org/ibr/images/logos/landscape1200.png
+
+
+Python job scheduling for humans. Forked and modified from github.com/dbader/schedule.
 
 An in-process scheduler for periodic jobs that uses the builder pattern
 for configuration. Schedule lets you run Python functions (or any other
@@ -25,33 +29,35 @@ Features
 - A simple to use API for scheduling jobs.
 - Very lightweight and no external dependencies.
 - Excellent test coverage.
-- Tested on Python 2.7, 3.5, and 3.6
+- Tested on Python 3.5, and 3.6
 
 Usage
 -----
 
 .. code-block:: bash
 
-    $ pip install schedule
+    $ pip install aioschedule
 
 .. code-block:: python
 
-    import schedule
+    import asyncio
+    import aioschedule as schedule
     import time
 
-    def job():
-        print("I'm working...")
+    async def job(message='stuff', n=1):
+        print("Asynchronous invocation (%s) of I'm working on:" % n, message)
+        asyncio.sleep(1)
 
-    schedule.every(10).minutes.do(job)
-    schedule.every().hour.do(job)
+    for i in range(1,3):
+        schedule.every(1).seconds.do(job, n=i)
+    schedule.every(5).to(10).days.do(job)
+    schedule.every().hour.do(job, message='things')
     schedule.every().day.at("10:30").do(job)
-    schedule.every(5).to(10).minutes.do(job)
-    schedule.every().monday.do(job)
-    schedule.every().wednesday.at("13:15").do(job)
 
+    loop = asyncio.get_event_loop()
     while True:
-        schedule.run_pending()
-        time.sleep(1)
+        loop.run_until_complete(schedule.run_pending())
+        time.sleep(0.1)
 
 Documentation
 -------------
@@ -61,11 +67,19 @@ Schedule's documentation lives at `schedule.readthedocs.io <https://schedule.rea
 Please also check the FAQ there with common questions.
 
 
+Development
+-----------
+Run `vagrant up` to spawn a virtual machine containing the development
+environment. Make sure to set the `IBR_GIT_COMMITTER_NAME` and
+`IBR_GIT_COMMITTER_EMAIL` environment variables.
+
+
 Meta
 ----
 
-Daniel Bader - `@dbader_org <https://twitter.com/dbader_org>`_ - mail@dbader.org
+- Daniel Bader - `@dbader_org <https://twitter.com/dbader_org>`_ - mail@dbader.org
+- Cochise Ruhulessin - `@magicalcochise <https://twitter.com/magicalcochise>`_ - c.ruhulessin@ibrb.org
 
 Distributed under the MIT license. See ``LICENSE.txt`` for more information.
 
-https://github.com/dbader/schedule
+https://github.com/ibrb/python-aioschedule
