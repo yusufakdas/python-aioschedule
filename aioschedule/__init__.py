@@ -44,12 +44,11 @@ Usage:
 [3] https://adam.herokuapp.com/past/2010/6/30/replace_cron_with_clockwork/
 """
 import asyncio
-import collections
+from collections.abc import Hashable
 import datetime
 import functools
 import logging
 import random
-import time
 
 logger = logging.getLogger('schedule')
 
@@ -110,7 +109,7 @@ class Scheduler(object):
 
         return await asyncio.wait(jobs, *args, **kwargs)
 
-    async def run_all(self, delay_seconds=0, *args, **kwargs):
+    async def run_all(self, *args, **kwargs):
         """Run all jobs regardless if they are scheduled to run or not.
 
 		*timeout* can be used to control the maximum number of seconds to wait before
@@ -138,9 +137,6 @@ class Scheduler(object):
 		|                             | futures finish or are cancelled.       |
 		+-----------------------------+----------------------------------------+
 		"""
-        if delay_seconds:
-            warnings.warn("The `delay_seconds` parameter is deprecated.",
-                DeprecationWarning)
         jobs = [self._run_job(job) for job in self.jobs[:]]
         if not jobs:
             return [], []
@@ -380,7 +376,8 @@ class Job(object):
         :param tags: A unique list of ``Hashable`` tags.
         :return: The invoked job instance
         """
-        if not all(isinstance(tag, collections.Hashable) for tag in tags):
+        if not all(isinstance(tag, Hashable) for tag in tags):
+
             raise TypeError('Tags must be hashable')
         self.tags.update(tags)
         return self
